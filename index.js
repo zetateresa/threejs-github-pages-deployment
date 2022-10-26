@@ -3,18 +3,9 @@ import * as THREE from "https://unpkg.com/three@0.126.1/build/three.module.js"
 const canvas = document.querySelector('.webgl')
 const scene = new THREE.Scene()
 
-// const geometry = new THREE.BoxGeometry(1, 1, 1)
-// const material = new THREE.MeshLambertMaterial(
-//     {
-//         color: 0xff00ff
-//     }
-// )
-// const mesh = new THREE.Mesh(geometry, material)
-// scene.add(mesh)
-
 const textureLoader = new THREE.TextureLoader();
 
-const earthGeo = new THREE.BoxGeometry(3, 3, 3);
+const earthGeo = new THREE.SphereGeometry(3, 20, 20);
 const earthMat = new THREE.MeshLambertMaterial({
     map: textureLoader.setPath('img/').load('globe.jpg')
 });
@@ -35,8 +26,8 @@ scene.add(light)
 const ambientLight = new THREE.AmbientLight(0x101010);
 scene.add(ambientLight);
 
-const camera = new THREE.PerspectiveCamera(120, sizes.width/sizes.height, 0.1, 100)
-camera.position.set(-10, 4, 10)
+const camera = new THREE.PerspectiveCamera(20, sizes.width/sizes.height, 0.1, 100)
+camera.position.set(0, 0, 30)
 scene.add(camera)
 
 const renderer = new THREE.WebGL1Renderer({
@@ -48,6 +39,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.shadowMap.enabled = true
 
 function animate(){
+    earth.rotateY(0.01)
     requestAnimationFrame(animate)
     renderer.render(scene, camera)
 }
